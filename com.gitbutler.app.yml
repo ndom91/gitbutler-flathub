@@ -1,0 +1,160 @@
+id: com.gitbutler.app
+runtime: org.gnome.Platform
+runtime-version: '47'
+sdk: org.gnome.Sdk
+command: gitbutler-tauri
+
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node20
+  - org.freedesktop.Sdk.Extension.rust-stable
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --share=network
+  - --filesystem=/tmp
+  - --filesystem=host
+  - --filesystem=xdg-run/gvfsd
+  - --allow=devel
+  - --socket=system-bus
+  - --socket=session-bus
+  - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons:~/.icons
+  - --talk-name=org.freedesktop.portal.Fcitx
+  # Required for interacting with git
+  - --socket=ssh-auth
+  - --socket=gpg-agent
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.freedesktop.Flatpak # Required for flatpak-spawn
+  - --talk-name=org.kde.kwalletd6
+  - --talk-name=org.gnome.keyring.SystemPrompter
+  
+build-options:
+  append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
+
+separate-locales: false
+modules:
+  - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
+  
+  - name: webkit2gtk-4.1
+    sources:
+      - type: archive
+        url: https://webkitgtk.org/releases/webkitgtk-2.46.4.tar.xz
+        sha256: 0eff5f0ab0a2872ec87df62bc32e3289c8af625716ac71e94b298d74e0374176
+        x-checker-data:
+          type: html
+          url: https://webkitgtk.org/releases/
+          version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
+          url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DPORT=GTK
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DENABLE_DOCUMENTATION=OFF
+      - -DENABLE_MINIBROWSER=OFF
+      - -DENABLE_WEBDRIVER=OFF
+      - -DENABLE_GAMEPAD=OFF
+      - -DUSE_LIBBACKTRACE=OFF
+      - -DUSE_GTK4=OFF
+      - -DUSE_SOUP2=ON
+      - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
+    modules:
+      - shared-modules/libsoup/libsoup-2.4.json
+
+      - name: unifdef
+        no-autogen: true
+        make-install-args:
+          - prefix=${FLATPAK_DEST}
+        sources:
+          - type: archive
+            url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
+            sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
+        cleanup:
+          - '*'
+
+      - name: libjxl
+        buildsystem: cmake
+        config-opts:
+          - -DCMAKE_BUILD_TYPE=Release
+          - -DBUILD_TESTING=OFF
+        sources:
+          - type: git
+            url: https://github.com/libjxl/libjxl.git
+            tag: v0.11.0
+            commit: 4df1e9eccdf86b8df4c0c7c08f529263906f9c4f
+            disable-shallow-clone: true
+            x-checker-data:
+              type: git
+              tag-pattern: ^v([\d.]+)$
+              
+  - name: libvips
+    cleanup:
+      - /*
+    sources:
+      - type: git
+        url: https://github.com/libvips/libvips
+        tag: v8.16.0
+        commit: 8dd05105843830110cad2338e0af145a682d4708
+        x-checker-data:
+          type: git
+          tag-pattern: ^v((?:\d+.)*\d+)$
+    buildsystem: meson
+
+  - name: GitButler
+    sources:
+      - type: git
+        url: https://github.com/gitbutlerapp/gitbutler.git
+        tag: release/0.14.0
+        commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
+        x-checker-data:
+          type: git
+          tag-pattern: ^v((?:\d+.)*\d+)$
+      - type: patch
+        path: 0001-disable-tauri-updater.patch
+      - generated-sources.json
+      - cargo-sources.json
+      - type: file
+        path: com.gitbutler.app.appdata.xml
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
+      env:
+        CARGO_HOME: /run/build/gitbutler/cargo
+        XDG_CACHE_HOME: /run/build/gitbutler/flatpak-node/cache
+        npm_config_cache: /run/build/gitbutler/flatpak-node/npm-cache
+        npm_config_offline: 'true'
+        npm_config_sharp_libvips_local_prebuilds: /run/build/gitbutler/flatpak-node/libvips-cache
+        NODE_OPTIONS: --max_old_space_size=4096
+    build-commands:
+      - pnpm ci --offline --legacy-peer-deps --prefix=$project
+      - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
+      - pnpm run tauri build -- -b none
+      - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.appdata.xml
+      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-tauri
+      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-askpass
+      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-setsid
+      - install -Dm644 usr/share/applications/*.desktop /app/share/applications/com.gitbutler.app.desktop
+      - desktop-file-edit --set-icon=com.gitbutler.app /app/share/applications/com.gitbutler.app.desktop
+      - |
+        for size in 32x32 128x128 256x256@2; do
+          install -Dm644 usr/share/icons/hicolor/${size}/apps/gitbutler-tauri.png /app/share/icons/hicolor/${size}/apps/com.gitbutler.app.png
+        done
+
+  - name: host-spawn
+    buildsystem: simple
+    build-options:
+      no-debuginfo: true
+    build-commands:
+      - install -Dm755 host-spawn /app/bin/host-spawn
+    sources:
+      - type: file
+        url: https://github.com/1player/host-spawn/releases/download/1.5.0/host-spawn-x86_64
+        sha256: dbf67e7e111c4fe1edb0c642cbb4193064ca5b384aeb1054fc2befba6ed88b83
+        dest-filename: host-spawn
+        only-arches: [x86_64]
+      # - type: file
+      #   url: https://github.com/1player/host-spawn/releases/download/1.5.0/host-spawn-aarch64
+      #   sha256: c42c12be6cdd83e374b847bec836659fb45231215797777c9ee1c9c0ae9e3783
+      #   dest-filename: host-spawn
+      #   only-arches: [aarch64]
