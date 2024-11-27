@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-
-#!/usr/bin/env bash
-
 MANIFEST_PATH="com.gitbutler.app.yml"
 FLATPAK_ID="com.gitbutler.app"
 
@@ -23,7 +20,7 @@ flatpak-builder \
   --repo=repo builddir "$MANIFEST_PATH"
 
 # Export gitbutler-tauri.flatpak
-flatpak build-bundle repo "$FLATPAK_ID.flatpak" "$FLATPAK_ID"
+# flatpak build-bundle repo "$FLATPAK_ID.flatpak" "$FLATPAK_ID"
 
 # Notes
 # - https://tauri.app/distribute/flatpak/
