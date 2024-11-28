@@ -29,7 +29,7 @@ finish-args:
   - --talk-name=org.freedesktop.Flatpak # Required for flatpak-spawn
   - --talk-name=org.kde.kwalletd6
   - --talk-name=org.gnome.keyring.SystemPrompter
-  
+
 build-options:
   append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-nightly/bin
 
@@ -51,21 +51,17 @@ modules:
       - cargo-sources.json
       - type: file
         path: com.gitbutler.app.appdata.xml
-      # TODO: Generate in GHA i.e. https://github.com/podman-desktop/podman-desktop/blob/main/.github/workflows/release.yaml
-      - type: dir
-        path: ./pnpm-store2
-      # pnpm tool used to build the project
       - type: file
         url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-x64
         dest-filename: pnpm
         sha256: 7db041074a5479713e8ced6c79b7a2874f957ce566cd6f53caf0c5ba4568fcf6
-        only-arches: 
+        only-arches:
          - x86_64
       - type: file
         url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-arm64
         dest-filename: pnpm
         sha256: 2625b2095a6722c0265deeec5f7779750c6abae317f30001eb20fba9f092d6cc
-        only-arches: 
+        only-arches:
          - aarch64
     buildsystem: simple
     build-options:
@@ -74,6 +70,7 @@ modules:
       append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-nightly/bin:/run/build/GitButler/bin
       env:
         CARGO_HOME: /run/build/gitbutler/cargo
+        RUST_BACKTRACE: all
     build-commands:
       - chmod 755 pnpm
       - mkdir bin && mv pnpm bin/

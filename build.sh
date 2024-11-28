@@ -13,11 +13,12 @@ FLATPAK_ID="com.gitbutler.app"
 # flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo builddir "$MANIFEST_PATH"
 
 flatpak-builder \
+  --verbose \
   --force-clean \
   --user \
-  --install \
   --install-deps-from=flathub \
-  --repo=repo builddir "$MANIFEST_PATH"
+  --repo=repo \
+  --install builddir "$MANIFEST_PATH"
 
 # Export gitbutler-tauri.flatpak
 # flatpak build-bundle repo "$FLATPAK_ID.flatpak" "$FLATPAK_ID"
@@ -28,7 +29,3 @@ flatpak-builder \
 # - https://github.com/madeofpendletonwool/PinePods/blob/5377b061357d1ba5e04e607b5f626bf349cf09f8/.github/workflows/build-flatpak.yml#L4
 # - https://github.com/Beanow/hi-flatpak
 # - https://github.com/flathub/com.vscodium.codium-insiders/blob/master/com.vscodium.codium-insiders.yaml
-#
-#
-# Instllation
-# - libsoup (2.54+)
