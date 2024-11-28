@@ -16,9 +16,10 @@ sources:
 	# Need to convert pnpm lock file to npm package-lock.json first
 	cd /opt/gitbutler/gitbutler && pnpm dlx pnpm-lock-to-npm-lock pnpm-lock.yaml
 	flatpak-node-generator --no-requests-cache -r -o node-sources.json npm /opt/gitbutler/gitbutler/package-lock.json
+	# git submodule update --remote --merge
 
 flatpak:
-	flatpak-builder --verbose --force-clean --user --install-deps-from=flathub --repo=repo --install builddir com.gitbutler.app.yml
+	flatpak-builder --verbose --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
 	# flatpak run org.flatpak.Builder --verbose --keep-build-dirs --user --install --force-clean build com.gitbutler.app.yml --repo=.repo
 
 lint:

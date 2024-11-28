@@ -24,7 +24,7 @@ finish-args:
   # - --talk-name=org.freedesktop.portal.Fcitx
   # Required for interacting with git
   - --socket=ssh-auth
-  - --socket=gpg-agent
+  # - --socket=gpg-agent
   - --talk-name=org.freedesktop.secrets
   # - --talk-name=org.freedesktop.Flatpak # Required for flatpak-spawn
   - --talk-name=org.kde.kwalletd6
@@ -42,12 +42,12 @@ modules:
         url: https://github.com/gitbutlerapp/gitbutler.git
         tag: release/0.14.0
         commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
-        x-checker-data:
-          type: git
-          tag-pattern: ^release/.*$
+        # x-checker-data:
+        #   type: git
+        #   tag-pattern: ^release/.*$
       - type: patch
         path: 0001-disable-tauri-updater.patch
-      - generated-sources.json
+      - node-sources.json
       - cargo-sources.json
       - type: file
         path: com.gitbutler.app.metainfo.xml
