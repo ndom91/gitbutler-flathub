@@ -30,8 +30,8 @@ finish-args:
   - --talk-name=org.kde.kwalletd6
   - --talk-name=org.gnome.keyring.SystemPrompter
 
-build-options:
-  append-path: /usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-nightly/extra/sdk/rust-nightly/bin
+# cleanup:
+#   - '*'
 
 separate-locales: false
 modules:
@@ -67,7 +67,7 @@ modules:
     build-options:
       build-args:
         - --share=network
-      append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-nightly/bin:/run/build/GitButler/bin
+      append-path: /usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-nightly/extra/sdk/rust-nightly/bin:/run/build/GitButler/bin
       env:
         CARGO_HOME: /run/build/gitbutler/cargo
         RUST_BACKTRACE: all
