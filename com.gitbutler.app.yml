@@ -37,69 +37,69 @@ separate-locales: false
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
   
-  - name: webkit2gtk-4.1
-    sources:
-      - type: archive
-        url: https://webkitgtk.org/releases/webkitgtk-2.46.4.tar.xz
-        sha256: 0eff5f0ab0a2872ec87df62bc32e3289c8af625716ac71e94b298d74e0374176
-        x-checker-data:
-          type: html
-          url: https://webkitgtk.org/releases/
-          version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
-          url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DPORT=GTK
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -DENABLE_DOCUMENTATION=OFF
-      - -DENABLE_MINIBROWSER=OFF
-      - -DENABLE_WEBDRIVER=OFF
-      - -DENABLE_GAMEPAD=OFF
-      - -DUSE_LIBBACKTRACE=OFF
-      - -DUSE_GTK4=OFF
-      - -DUSE_SOUP2=ON
-      - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
-    modules:
-      - shared-modules/libsoup/libsoup-2.4.json
-
-      - name: unifdef
-        no-autogen: true
-        make-install-args:
-          - prefix=${FLATPAK_DEST}
-        sources:
-          - type: archive
-            url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
-            sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
-        cleanup:
-          - '*'
-
-      - name: libjxl
-        buildsystem: cmake
-        config-opts:
-          - -DCMAKE_BUILD_TYPE=Release
-          - -DBUILD_TESTING=OFF
-        sources:
-          - type: git
-            url: https://github.com/libjxl/libjxl.git
-            tag: v0.11.0
-            commit: 4df1e9eccdf86b8df4c0c7c08f529263906f9c4f
-            disable-shallow-clone: true
-            x-checker-data:
-              type: git
-              tag-pattern: ^v([\d.]+)$
+  # - name: webkit2gtk-4.1
+  #   sources:
+  #     - type: archive
+  #       url: https://webkitgtk.org/releases/webkitgtk-2.46.4.tar.xz
+  #       sha256: 0eff5f0ab0a2872ec87df62bc32e3289c8af625716ac71e94b298d74e0374176
+  #       x-checker-data:
+  #         type: html
+  #         url: https://webkitgtk.org/releases/
+  #         version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
+  #         url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
+  #   buildsystem: cmake-ninja
+  #   config-opts:
+  #     - -DPORT=GTK
+  #     - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+  #     - -DENABLE_DOCUMENTATION=OFF
+  #     - -DENABLE_MINIBROWSER=OFF
+  #     - -DENABLE_WEBDRIVER=OFF
+  #     - -DENABLE_GAMEPAD=OFF
+  #     - -DUSE_LIBBACKTRACE=OFF
+  #     - -DUSE_GTK4=OFF
+  #     - -DUSE_SOUP2=ON
+  #     - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
+  #   modules:
+  #     - shared-modules/libsoup/libsoup-2.4.json
+  #
+  #     - name: unifdef
+  #       no-autogen: true
+  #       make-install-args:
+  #         - prefix=${FLATPAK_DEST}
+  #       sources:
+  #         - type: archive
+  #           url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
+  #           sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
+  #       cleanup:
+  #         - '*'
+  #
+  #     - name: libjxl
+  #       buildsystem: cmake
+  #       config-opts:
+  #         - -DCMAKE_BUILD_TYPE=Release
+  #         - -DBUILD_TESTING=OFF
+  #       sources:
+  #         - type: git
+  #           url: https://github.com/libjxl/libjxl.git
+  #           tag: v0.11.0
+  #           commit: 4df1e9eccdf86b8df4c0c7c08f529263906f9c4f
+  #           disable-shallow-clone: true
+  #           x-checker-data:
+  #             type: git
+  #             tag-pattern: ^v([\d.]+)$
               
-  - name: libvips
-    cleanup:
-      - /*
-    sources:
-      - type: git
-        url: https://github.com/libvips/libvips
-        tag: v8.16.0
-        commit: 8dd05105843830110cad2338e0af145a682d4708
-        x-checker-data:
-          type: git
-          tag-pattern: ^v((?:\d+.)*\d+)$
-    buildsystem: meson
+  # - name: libvips
+  #   cleanup:
+  #     - /*
+  #   sources:
+  #     - type: git
+  #       url: https://github.com/libvips/libvips
+  #       tag: v8.16.0
+  #       commit: 8dd05105843830110cad2338e0af145a682d4708
+  #       x-checker-data:
+  #         type: git
+  #         tag-pattern: ^v((?:\d+.)*\d+)$
+  #   buildsystem: meson
 
   - name: GitButler
     sources:
@@ -116,6 +116,20 @@ modules:
       - cargo-sources.json
       - type: file
         path: com.gitbutler.app.appdata.xml
+        
+      # pnpm tool used to build the project
+      - type: file
+        url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-x64
+        dest-filename: pnpm
+        sha256: 7db041074a5479713e8ced6c79b7a2874f957ce566cd6f53caf0c5ba4568fcf6
+        only-arches: 
+         - x86_64
+      - type: file
+        url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-arm64
+        dest-filename: pnpm
+        sha256: 2625b2095a6722c0265deeec5f7779750c6abae317f30001eb20fba9f092d6cc
+        only-arches: 
+         - aarch64
     buildsystem: simple
     build-options:
       append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
@@ -127,9 +141,12 @@ modules:
         npm_config_sharp_libvips_local_prebuilds: /run/build/gitbutler/flatpak-node/libvips-cache
         NODE_OPTIONS: --max_old_space_size=4096
     build-commands:
-      - pnpm ci --offline --legacy-peer-deps --prefix=$project
+      - chmod 755 pnpm
+      - node --version
+      - ./pnpm --version
+      - ./pnpm ci --offline --legacy-peer-deps
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
-      - pnpm run tauri build -- -b none
+      - ./pnpm run tauri build -- -b none
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.appdata.xml
       - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-tauri
       - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-askpass
