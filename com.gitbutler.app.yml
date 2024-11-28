@@ -144,7 +144,8 @@ modules:
       - chmod 755 pnpm
       - node --version
       - ./pnpm --version
-      - ./pnpm ci --offline --legacy-peer-deps
+      - mkdir pnpm-store
+      - ./pnpm install --loglevel debug --frozen-lockfile --store-dir ./pnpm-store
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
       - ./pnpm run tauri build -- -b none
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.appdata.xml
