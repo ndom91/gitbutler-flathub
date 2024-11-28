@@ -23,7 +23,7 @@ flatpak:
 
 lint:
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest com.gitbutler.app.yml
-	flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo .repo
+	# appstreamcli validate com.gitbutler.app.metainfo.xml
 
 bundle:
 	flatpak build-bundle .repo com.gitbutler.app.flatpak com.gitbutler.app

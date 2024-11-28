@@ -18,15 +18,15 @@ finish-args:
   - --filesystem=host
   - --filesystem=xdg-run/gvfsd
   - --allow=devel
-  - --socket=system-bus
-  - --socket=session-bus
+  # - --socket=system-bus
+  # - --socket=session-bus
   - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons:~/.icons
-  - --talk-name=org.freedesktop.portal.Fcitx
+  # - --talk-name=org.freedesktop.portal.Fcitx
   # Required for interacting with git
   - --socket=ssh-auth
   - --socket=gpg-agent
   - --talk-name=org.freedesktop.secrets
-  - --talk-name=org.freedesktop.Flatpak # Required for flatpak-spawn
+  # - --talk-name=org.freedesktop.Flatpak # Required for flatpak-spawn
   - --talk-name=org.kde.kwalletd6
   - --talk-name=org.gnome.keyring.SystemPrompter
 
@@ -50,7 +50,7 @@ modules:
       - generated-sources.json
       - cargo-sources.json
       - type: file
-        path: com.gitbutler.app.appdata.xml
+        path: com.gitbutler.app.metainfo.xml
       - type: file
         url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-x64
         dest-filename: pnpm
