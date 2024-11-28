@@ -116,7 +116,9 @@ modules:
       - cargo-sources.json
       - type: file
         path: com.gitbutler.app.appdata.xml
-        
+      # TODO: Generate in GHA i.e. https://github.com/podman-desktop/podman-desktop/blob/main/.github/workflows/release.yaml
+      - type: dir
+        path: ./pnpm-store2
       # pnpm tool used to build the project
       - type: file
         url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-x64
@@ -132,22 +134,26 @@ modules:
          - aarch64
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
+      build-args:
+        - --share=network
+      append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin:/run/build/GitButler/bin
       env:
         CARGO_HOME: /run/build/gitbutler/cargo
-        XDG_CACHE_HOME: /run/build/gitbutler/flatpak-node/cache
-        npm_config_cache: /run/build/gitbutler/flatpak-node/npm-cache
-        npm_config_offline: 'true'
-        npm_config_sharp_libvips_local_prebuilds: /run/build/gitbutler/flatpak-node/libvips-cache
-        NODE_OPTIONS: --max_old_space_size=4096
+        # XDG_CACHE_HOME: /run/build/gitbutler/flatpak-node/cache
+        # npm_config_cache: /run/build/gitbutler/flatpak-node/npm-cache
+        # npm_config_offline: 'true'
+        # npm_config_sharp_libvips_local_prebuilds: /run/build/gitbutler/flatpak-node/libvips-cache
+        # NODE_OPTIONS: --max_old_space_size=4096
     build-commands:
       - chmod 755 pnpm
+      - mkdir bin && mv pnpm bin/
       - node --version
-      - ./pnpm --version
-      - mkdir pnpm-store
-      - ./pnpm install --loglevel debug --frozen-lockfile --store-dir ./pnpm-store
-      - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
-      - ./pnpm run tauri build -- -b none
+      - pnpm --version
+      # - mkdir pnpm-store && mv v3 pnpm-store/
+      - pnpm install --loglevel debug --frozen-lockfile --store-dir ./pnpm-store
+      - ls -lah cargo/
+      - cargo fetch --manifest-path Cargo.toml
+      - pnpm run tauri build --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.appdata.xml
       - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-tauri
       - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-askpass
