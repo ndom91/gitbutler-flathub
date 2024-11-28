@@ -44,7 +44,7 @@ modules:
         commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
         x-checker-data:
           type: git
-          tag-pattern: ^v((?:\d+.)*\d+)$
+          tag-pattern: ^release/.*$
       - type: patch
         path: 0001-disable-tauri-updater.patch
       - generated-sources.json

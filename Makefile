@@ -18,7 +18,8 @@ sources:
 	flatpak-node-generator --no-requests-cache -r -o node-sources.json npm /opt/gitbutler/gitbutler/package-lock.json
 
 flatpak:
-	flatpak run org.flatpak.Builder --verbose --keep-build-dirs --user --install --force-clean build com.gitbutler.app.yml --repo=.repo
+	flatpak-builder --verbose --force-clean --user --install-deps-from=flathub --repo=repo --install builddir com.gitbutler.app.yml
+	# flatpak run org.flatpak.Builder --verbose --keep-build-dirs --user --install --force-clean build com.gitbutler.app.yml --repo=.repo
 
 lint:
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest com.gitbutler.app.yml
