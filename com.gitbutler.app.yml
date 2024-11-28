@@ -5,7 +5,7 @@ sdk: org.gnome.Sdk
 command: gitbutler-tauri
 
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.node20
+  - org.freedesktop.Sdk.Extension.node22
   - org.freedesktop.Sdk.Extension.rust-nightly
 
 finish-args:
@@ -31,7 +31,7 @@ finish-args:
   - --talk-name=org.gnome.keyring.SystemPrompter
 
 build-options:
-  append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-nightly/bin
+  append-path: /usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-nightly/extra/sdk/rust-nightly/bin
 
 separate-locales: false
 modules:
