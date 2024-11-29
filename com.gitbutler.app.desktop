@@ -1,0 +1,7 @@
+[Desktop Entry]
+Categories=Development;
+Exec=gitbutler-tauri
+Icon=com.gitbutler.app
+Name=GitButler Nightly
+Terminal=false
+Type=Application

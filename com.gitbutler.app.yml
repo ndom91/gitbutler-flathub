@@ -42,15 +42,20 @@ modules:
         url: https://github.com/gitbutlerapp/gitbutler.git
         tag: release/0.14.0
         commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
-        # x-checker-data:
-        #   type: git
-        #   tag-pattern: ^release/.*$
       - type: patch
         path: 0001-disable-tauri-updater.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
         path: com.gitbutler.app.metainfo.xml
+      - type: file
+        path: com.gitbutler.app.desktop
+      - type: file
+        path: icons/128x128.png
+      - type: file
+        path: icons/256x256@2.png
+      - type: file
+        path: icons/32x32.png
       - type: file
         url: https://github.com/pnpm/pnpm/releases/download/v9.7.1/pnpm-linux-x64
         dest-filename: pnpm
@@ -74,26 +79,25 @@ modules:
     build-commands:
       - chmod 755 pnpm
       - mkdir bin && mv pnpm bin/
-      - node --version
-      - pnpm --version
-      - pnpm install --loglevel debug --frozen-lockfile --store-dir ./pnpm-store
+      - pnpm install --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle --verbose
-      - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.appdata.xml
-      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-tauri
-      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-askpass
-      - install -Dm755 -t /app/bin/ src-tauri/target/release/gitbutler-git-setsid
-      - install -Dm644 usr/share/applications/*.desktop /app/share/applications/com.gitbutler.app.desktop
-      - desktop-file-edit --set-icon=com.gitbutler.app /app/share/applications/com.gitbutler.app.desktop
+      - cargo build -p gitbutler-git
+      # TODO: Change back 'debug'
+      - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-tauri
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-askpass
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-setsid
+      - install -Dm644 -t /app/share/applications/ com.gitbutler.app.desktop
       - |
         for size in 32x32 128x128 256x256@2; do
-          install -Dm644 usr/share/icons/hicolor/${size}/apps/gitbutler-tauri.png /app/share/icons/hicolor/${size}/apps/com.gitbutler.app.png
+          install -Dm644 ${size}.png /app/share/icons/hicolor/${size}/apps/com.gitbutler.app.png
         done
 
   - name: host-spawn
     buildsystem: simple
-    build-options:
-      no-debuginfo: true
+    # build-options:
+    #   no-debuginfo: true
     build-commands:
       - install -Dm755 host-spawn /app/bin/host-spawn
     sources:
