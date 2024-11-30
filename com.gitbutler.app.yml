@@ -44,6 +44,8 @@ modules:
         commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
       - type: patch
         path: 0001-disable-tauri-updater.patch
+      - type: patch
+        path: 0002-update-git-bin-path-flatpak.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
@@ -82,7 +84,7 @@ modules:
       - pnpm install --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
       - cargo build -p gitbutler-git
-      # TODO: Change back 'debug'
+      # TODO: Change back from 'debug'
       - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/debug/gitbutler-tauri

@@ -10,66 +10,11 @@ index b4a45e3c8..e8c6015a0 100644
  		"http:allow-fetch",
  		{
  			"identifier": "http:default",
-diff --git a/crates/gitbutler-tauri/tauri.conf.json b/crates/gitbutler-tauri/tauri.conf.json
-index ffe74de6a..4b7f59e83 100644
---- a/crates/gitbutler-tauri/tauri.conf.json
-+++ b/crates/gitbutler-tauri/tauri.conf.json
-@@ -32,14 +32,6 @@
- 			}
- 		}
- 	},
--	"plugins": {
--		"updater": {
--			"endpoints": [
--				"https://app.gitbutler.com/releases/nightly/{{target}}-{{arch}}/{{current_version}}"
--			],
--			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYwNTc2RDhBM0U0MjM4RUIKUldUck9FSStpbTFYWUE5UkJ3eXhuekZOL2V2RnpKaFUxbGJRNzBMVmF5V0gzV1JvN3hRblJMRDIK"
--		}
--	},
- 	"app": {
- 		"withGlobalTauri": false,
- 		"enableGTKAppId": true,
-diff --git a/crates/gitbutler-tauri/tauri.conf.nightly.json b/crates/gitbutler-tauri/tauri.conf.nightly.json
-index 26eb62f4b..b1dcf09a4 100644
---- a/crates/gitbutler-tauri/tauri.conf.nightly.json
-+++ b/crates/gitbutler-tauri/tauri.conf.nightly.json
-@@ -14,13 +14,5 @@
- 			"icons/nightly/icon.ico"
- 		],
- 		"externalBin": ["gitbutler-git-setsid", "gitbutler-git-askpass"]
--	},
--	"plugins": {
--		"updater": {
--			"endpoints": [
--				"https://app.gitbutler.com/releases/nightly/{{target}}-{{arch}}/{{current_version}}"
--			],
--			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYwNTc2RDhBM0U0MjM4RUIKUldUck9FSStpbTFYWUE5UkJ3eXhuekZOL2V2RnpKaFUxbGJRNzBMVmF5V0gzV1JvN3hRblJMRDIK"
--		}
- 	}
- }
-diff --git a/crates/gitbutler-tauri/tauri.conf.release.json b/crates/gitbutler-tauri/tauri.conf.release.json
-index 1b7779a9b..692cae364 100644
---- a/crates/gitbutler-tauri/tauri.conf.release.json
-+++ b/crates/gitbutler-tauri/tauri.conf.release.json
-@@ -14,13 +14,5 @@
- 			"icons/icon.ico"
- 		],
- 		"externalBin": ["gitbutler-git-setsid", "gitbutler-git-askpass"]
--	},
--	"plugins": {
--		"updater": {
--			"endpoints": [
--				"https://app.gitbutler.com/releases/release/{{target}}-{{arch}}/{{current_version}}"
--			],
--			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDYwNTc2RDhBM0U0MjM4RUIKUldUck9FSStpbTFYWUE5UkJ3eXhuekZOL2V2RnpKaFUxbGJRNzBMVmF5V0gzV1JvN3hRblJMRDIK"
--		}
- 	}
- }
 diff --git a/crates/gitbutler-tauri/src/main.rs b/crates/gitbutler-tauri/src/main.rs
 index 3042b3809..f0c90c56a 100644
 --- a/crates/gitbutler-tauri/src/main.rs
 +++ b/crates/gitbutler-tauri/src/main.rs
-@@ -126,7 +126,6 @@ fn main() {
+@@ -126,7 +126,6 @@
                  .plugin(tauri_plugin_os::init())
                  .plugin(tauri_plugin_process::init())
                  .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
@@ -77,21 +22,19 @@ index 3042b3809..f0c90c56a 100644
                  .plugin(tauri_plugin_dialog::init())
                  .plugin(tauri_plugin_fs::init())
                  // .plugin(tauri_plugin_context_menu::init())
-diff --git a/apps/desktop/src/lib/backend/tauri.ts b/apps/desktop/src/lib/backend/tauri.ts
-index c06a9bab1..628d5adb1 100644
---- a/apps/desktop/src/lib/backend/tauri.ts
-+++ b/apps/desktop/src/lib/backend/tauri.ts
-@@ -1,10 +1,11 @@
- import { invoke as invokeIpc, listen as listenIpc } from './ipc';
- import { getVersion } from '@tauri-apps/api/app';
--import { check } from '@tauri-apps/plugin-updater';
-
- export class Tauri {
-        invoke = invokeIpc;
-        listen = listenIpc;
--       checkUpdate = check;
-+       checkUpdate = async () => {
-+               return null;
-+       };
-        currentVersion = getVersion;
- }
+# diff --git a/apps/desktop/src/lib/backend/tauri.ts b/apps/desktop/src/lib/backend/tauri.ts
+# index c06a9bab1..a2d9d9c9d 100644
+# --- a/apps/desktop/src/lib/backend/tauri.ts
+# +++ b/apps/desktop/src/lib/backend/tauri.ts
+# @@ -1,10 +1,9 @@
+#  import { invoke as invokeIpc, listen as listenIpc } from './ipc';
+#  import { getVersion } from '@tauri-apps/api/app';
+# -import { check } from '@tauri-apps/plugin-updater';
+#
+#  export class Tauri {
+#         invoke = invokeIpc;
+#         listen = listenIpc;
+# -       checkUpdate = check;
+# +       checkUpdate = async () => return null;
+#         currentVersion = getVersion;
+#  }
