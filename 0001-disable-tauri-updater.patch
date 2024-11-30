@@ -65,3 +65,33 @@ index 1b7779a9b..692cae364 100644
 -		}
  	}
  }
+diff --git a/crates/gitbutler-tauri/src/main.rs b/crates/gitbutler-tauri/src/main.rs
+index 3042b3809..f0c90c56a 100644
+--- a/crates/gitbutler-tauri/src/main.rs
++++ b/crates/gitbutler-tauri/src/main.rs
+@@ -126,7 +126,6 @@ fn main() {
+                 .plugin(tauri_plugin_os::init())
+                 .plugin(tauri_plugin_process::init())
+                 .plugin(tauri_plugin_single_instance::init(|_, _, _| {}))
+-                .plugin(tauri_plugin_updater::Builder::new().build())
+                 .plugin(tauri_plugin_dialog::init())
+                 .plugin(tauri_plugin_fs::init())
+                 // .plugin(tauri_plugin_context_menu::init())
+diff --git a/apps/desktop/src/lib/backend/tauri.ts b/apps/desktop/src/lib/backend/tauri.ts
+index c06a9bab1..628d5adb1 100644
+--- a/apps/desktop/src/lib/backend/tauri.ts
++++ b/apps/desktop/src/lib/backend/tauri.ts
+@@ -1,10 +1,11 @@
+ import { invoke as invokeIpc, listen as listenIpc } from './ipc';
+ import { getVersion } from '@tauri-apps/api/app';
+-import { check } from '@tauri-apps/plugin-updater';
+
+ export class Tauri {
+        invoke = invokeIpc;
+        listen = listenIpc;
+-       checkUpdate = check;
++       checkUpdate = async () => {
++               return null;
++       };
+        currentVersion = getVersion;
+ }
