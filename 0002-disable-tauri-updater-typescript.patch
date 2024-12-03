@@ -1,0 +1,15 @@
+diff --git a/apps/desktop/src/lib/backend/tauri.ts b/apps/desktop/src/lib/backend/tauri.ts
+index c06a9bab1..4e35e28e5 100644
+--- a/apps/desktop/src/lib/backend/tauri.ts
++++ b/apps/desktop/src/lib/backend/tauri.ts
+@@ -1,10 +1,8 @@
+ import { invoke as invokeIpc, listen as listenIpc } from './ipc';
+ import { getVersion } from '@tauri-apps/api/app';
+-import { check } from '@tauri-apps/plugin-updater';
+
+ export class Tauri {
+        invoke = invokeIpc;
+        listen = listenIpc;
+-       checkUpdate = check;
+        currentVersion = getVersion;
+ }

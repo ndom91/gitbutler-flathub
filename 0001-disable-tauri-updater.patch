@@ -22,19 +22,3 @@ index 3042b3809..f0c90c56a 100644
                  .plugin(tauri_plugin_dialog::init())
                  .plugin(tauri_plugin_fs::init())
                  // .plugin(tauri_plugin_context_menu::init())
-# diff --git a/apps/desktop/src/lib/backend/tauri.ts b/apps/desktop/src/lib/backend/tauri.ts
-# index c06a9bab1..a2d9d9c9d 100644
-# --- a/apps/desktop/src/lib/backend/tauri.ts
-# +++ b/apps/desktop/src/lib/backend/tauri.ts
-# @@ -1,10 +1,9 @@
-#  import { invoke as invokeIpc, listen as listenIpc } from './ipc';
-#  import { getVersion } from '@tauri-apps/api/app';
-# -import { check } from '@tauri-apps/plugin-updater';
-#
-#  export class Tauri {
-#         invoke = invokeIpc;
-#         listen = listenIpc;
-# -       checkUpdate = check;
-# +       checkUpdate = async () => return null;
-#         currentVersion = getVersion;
-#  }

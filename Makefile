@@ -19,7 +19,8 @@ sources:
 	# git submodule update --remote --merge
 
 flatpak:
-	flatpak-builder --disable-rofiles-fuse --verbose --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
+	flatpak-builder --install --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
+	# flatpak-builder --disable-rofiles-fuse --verbose --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
 	# flatpak run org.flatpak.Builder --verbose --keep-build-dirs --user --install --force-clean build com.gitbutler.app.yml --repo=.repo
 
 lint:
