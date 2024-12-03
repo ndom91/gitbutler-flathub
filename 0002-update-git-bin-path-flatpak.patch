@@ -1,15 +1,15 @@
 diff --git a/crates/gitbutler-git/src/executor/tokio/mod.rs b/crates/gitbutler-git/src/executor/tokio/mod.rs
-index d225f1de5..a112290d2 100644
+index d225f1de5..e38dd095c 100644
 --- a/crates/gitbutler-git/src/executor/tokio/mod.rs
 +++ b/crates/gitbutler-git/src/executor/tokio/mod.rs
-@@ -29,8 +29,17 @@ unsafe impl super::GitExecutor for TokioExecutor {
+@@ -29,8 +29,18 @@ unsafe impl super::GitExecutor for TokioExecutor {
          cwd: P,
          envs: Option<HashMap<String, String>>,
      ) -> Result<(usize, String, String), Self::Error> {
 -        let git_exe = gix_path::env::exe_invocation();
 -        let mut cmd = Command::new(git_exe);
 +        // Check if we're running in a flatpak
-+        let flatpak = std::env::var("FLATPAK_ID").unwrap_or_else(|_| String::new());
++        let flatpak = std::env::var("FLATPAK_DD").unwrap_or_else(|_| String::new());
 +
 +        let mut cmd = if !flatpak.is_empty() {
 +            let mut cmd = Command::new("host-spawn");
@@ -17,12 +17,13 @@ index d225f1de5..a112290d2 100644
 +            cmd
 +        } else {
 +            let git_exe = gix_path::env::exe_invocation();
++            println!("git_exe: {:?}", git_exe);
 +            Command::new(git_exe)
 +        };
 
          // Output the command being executed to stderr, for debugging purposes
          // (only on test configs).
-@@ -47,7 +56,7 @@ unsafe impl super::GitExecutor for TokioExecutor {
+@@ -47,7 +57,7 @@ unsafe impl super::GitExecutor for TokioExecutor {
                  .map(|s| format!("{s:?}"))
                  .collect::<Vec<_>>()
                  .join(" ");
@@ -31,7 +32,7 @@ index d225f1de5..a112290d2 100644
          }
 
          cmd.kill_on_drop(true);
-@@ -88,6 +97,7 @@ unsafe impl super::GitExecutor for TokioExecutor {
+@@ -88,6 +98,7 @@ unsafe impl super::GitExecutor for TokioExecutor {
              }
          }
 
