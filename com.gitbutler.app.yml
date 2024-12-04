@@ -24,8 +24,8 @@ finish-args:
   - --talk-name=org.kde.kwalletd6
   - --talk-name=org.gnome.keyring.SystemPrompter
 
-cleanup:
-  - '*'
+# cleanup:
+#   - '*'
 
 separate-locales: false
 modules:
