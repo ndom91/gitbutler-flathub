@@ -46,10 +46,6 @@ modules:
         path: 0001-disable-tauri-updater.patch
       - type: patch
         path: 0002-disable-tauri-updater-typescript.patch
-      # - type: patch
-      #   path: 0002-update-git-bin-path-flatpak.patch
-      # - type: patch
-      #   path: 0003-git-ssh-command-single-quote.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
@@ -107,21 +103,3 @@ modules:
       - type: archive
         url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.39.1.tar.xz
         sha256: 40a38a0847b30c371b35873b3afcf123885dd41ea3ecbbf510efa97f3ce5c161
-
-  # - name: host-spawn
-  #   buildsystem: simple
-  #   # build-options:
-  #   #   no-debuginfo: true
-  #   build-commands:
-  #     - install -Dm755 host-spawn /app/bin/host-spawn
-  #   sources:
-  #     - type: file
-  #       url: https://github.com/1player/host-spawn/releases/download/1.5.0/host-spawn-x86_64
-  #       sha256: dbf67e7e111c4fe1edb0c642cbb4193064ca5b384aeb1054fc2befba6ed88b83
-  #       dest-filename: host-spawn
-  #       only-arches: [x86_64]
-  #     - type: file
-  #       url: https://github.com/1player/host-spawn/releases/download/1.5.0/host-spawn-aarch64
-  #       sha256: c42c12be6cdd83e374b847bec836659fb45231215797777c9ee1c9c0ae9e3783
-  #       dest-filename: host-spawn
-  #       only-arches: [aarch64]
