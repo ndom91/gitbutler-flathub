@@ -43,9 +43,11 @@ modules:
         tag: release/0.14.0
         commit: fcf4b9ce5f4c9c68f9f7944e491e35b2550c6e58
       - type: patch
-        path: 0001-disable-tauri-updater.patch
+        path: 0001-disable-updater-capabilities.patch
       - type: patch
-        path: 0002-disable-tauri-updater-typescript.patch
+        path: 0002-disable-updater-tauri-plugin.patch
+      - type: patch
+        path: 0003-disable-typescript-updater.patch
       - node-sources.json
       - cargo-sources.json
       - type: file

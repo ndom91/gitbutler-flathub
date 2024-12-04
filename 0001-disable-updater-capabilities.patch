@@ -1,0 +1,12 @@
+diff --git a/crates/gitbutler-tauri/capabilities/main.json b/crates/gitbutler-tauri/capabilities/main.json
+index d9b96fdee..768fe5125 100644
+--- a/crates/gitbutler-tauri/capabilities/main.json
++++ b/crates/gitbutler-tauri/capabilities/main.json
+@@ -15,7 +15,6 @@
+ 		"process:default",
+ 		"shell:allow-open",
+ 		"store:default",
+-		"updater:default",
+ 		"http:allow-fetch",
+ 		{
+       "identifier": "http:default",
