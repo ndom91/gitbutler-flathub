@@ -4,8 +4,14 @@
   <name>GitButler</name>
 
   <developer id="com.gitbutler">
-    <name>GitButler Team</name>
+    <name>GitButler Inc</name>
   </developer>
+
+  <description>
+    <p>A Git client for simultaneous branches on top of your existing workflow.</p>
+  </description>
+
+  <launchable type="desktop-id">com.gitbutler.app.desktop</launchable>
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-FSL-1.1-MIT=https://github.com/gitbutlerapp/gitbutler/blob/master/LICENSE.md</project_license>
@@ -14,21 +20,19 @@
   <url type="bugtracker">https://github.com/gitbutlerapp/gitbutler/issues</url>
   <url type="help">https://docs.gitbutler.com/</url>
 
-  <summary>Git branch management tool</summary>
+  <summary>Modern Git branch management tool</summary>
 
   <icon type="stock">com.gitbutler.app</icon>
-  <description>
-    <p>VSCodium combines the simplicity of a code editor with what developers need for the core
-      edit-build-debug cycle.</p>
-  </description>
+
   <categories>
     <category>Development</category>
   </categories>
+
   <branding>
-    <color type="primary" scheme_preference="light">#3cb4ae</color>
-    <color type="primary" scheme_preference="dark">#3cb4ae</color>
+    <color type="primary" scheme_preference="light">#97eae5</color>
+    <color type="primary" scheme_preference="dark">#97eae5</color>
   </branding>
-  <launchable type="desktop-id">com.gitbutler.app.desktop</launchable>
+
   <releases>
     <release version="0.14.0" date="2024-11-27">
       <description></description>
@@ -39,6 +43,6 @@
   </releases>
 
   <provides>
-    <binary>git-butler</binary>
+    <binary>gitbutler-tauri</binary>
   </provides>
 </component>
