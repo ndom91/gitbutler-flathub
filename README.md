@@ -1,3 +1,5 @@
+<img align="right" width="300" src="./icons/badge.svg" />
+
 # GitButler Flathub
 
 ## Setup Build Prerequisites
