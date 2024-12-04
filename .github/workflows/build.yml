@@ -1,0 +1,43 @@
+name: 'Publish'
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  FLATPAK_ID: com.gitbutler.app
+
+jobs:
+  bundle-flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-47
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prerequisites
+        run: |
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --noninteractive flathub org.gnome.Platform//47 org.gnome.Sdk//47
+
+      - name: Build Flatpak
+        run: |
+          flatpak-builder --repo=repo --force-clean --install-deps-from=flathub build-dir com.gitbutler.app.yml
+
+      - name: Create Flatpak bundle
+        run: |
+          flatpak build-bundle repo ${{ env.FLATPAK_ID }}.flatpak ${{ env.FLATPAK_ID }}
+
+      - name: Archive Flatpak files
+        run: |
+          mkdir flatpak_output
+          cp ${{ env.FLATPAK_ID }}.flatpak flatpak_output/
+          cp com.gitbutler.app.yml flatpak_output/
+          tar -czvf flatpak_files.tar.gz flatpak_output
+
+      - name: Upload Flatpak archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: flatpak-archive
+          path: gitbutler_flatpak.tar.gz
