@@ -68,7 +68,7 @@ def update_app_source(app_source, target):
     return app_source
 
 
-def generate_sources(
+def generate_cargo_sources(
     app_source, clone_dir=None, generator_script=None, generator_args=None
 ):
     cache_dir = os.environ.get(
@@ -102,6 +102,24 @@ def generate_sources(
         + generator_args
         + [os.path.join(clone_dir, "Cargo.lock")]
     )
+    generated_sources = json.loads(run(generator_cmdline))
+    logging.info("Generation completed")
+
+    return generated_sources
+
+# TODO
+def generate_node_sources():
+    run(["pip", "install", "git+https://github.com/flatpak/flatpak-builder-tools.git#egg=flatpak_node_generator&subdirectory=node"])
+	run(["pnpm", "dlx", "pnpm-lock-to-npm-lock", "pnpm-lock.yaml"])
+
+	run(["flatpak-node-generator", "--no-requests-cache", "-r", "-o", "node-sources.json", "npm", "package-lock.json"])
+    # generator_cmdline = (
+    #     [generator_script, "-o", "/dev/stdout"]
+    #     + generator_args
+    #     + [os.path.join(clone_dir, "package-lock.json")]
+    # )
+
+    # TODO: Does node generator output to stdout?
     generated_sources = json.loads(run(generator_cmdline))
     logging.info("Generation completed")
 
@@ -146,12 +164,13 @@ def main():
         app_source = json.load(f)
     if not args.keep_version:
         app_source = update_app_source(app_source, args.target)
-    generated_sources = generate_sources(
+    generated_sources = generate_cargo_sources(
         app_source,
         clone_dir=args.clone_dir,
         generator_script=args.generator,
         generator_args=args.generator_arg,
     )
+    generate_node_sources()
     with open(args.app_source_json, "w") as o:
         json.dump(app_source, o, indent=4)
     with open(args.gen_output, "w") as g:
