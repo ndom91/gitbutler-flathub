@@ -1,6 +1,8 @@
 <img align="right" width="300" src="./icons/badge.svg" />
 
-# GitButler Flathub
+# ⋈ GitButler Flathub
+
+This is the flatpak packaging code for the [GitButler](https://github.com/gitbutlerapp/gitbutler) desktop application.
 
 ## Setup Build Prerequisites
 
