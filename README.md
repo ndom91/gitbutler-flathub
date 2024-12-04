@@ -2,6 +2,28 @@
 
 ## Setup Build Prerequisites
 
+### Automatic
+
+1. Install `flatpak-builder-tools` and `flatpak-builder`
+
+```sh
+$ make install
+```
+
+2. Generate sources
+
+```sh
+make sources
+```
+
+3. Build flatpak
+
+```sh
+make flatpak
+```
+
+### Manual
+
 We'll need to use the `flatpak-builder-tools` `cargo` as well as `node` builders
 to generate the sources JSON inputs for use in the `flatpak-builder` command.
 
@@ -48,12 +70,11 @@ python3 flatpak-cargo-generator.py /opt/gitbutler/gitbutler/Cargo.lock -o cargo-
 
 ## Building
 
-After you've got the required files up-to-date with the version of
-GitButler defined in `com.gitbutler.app.yml` `git` source (around line `108`),
-we can build the actual app.
-
-1. Run `build.sh`
+After you've got the prerequisites installed and the cargo and node source files
+generated, we can build the actual flatpak.
 
 ```
-./build.sh
+$ make flatpak
 ```
+
+

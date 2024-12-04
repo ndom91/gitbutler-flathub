@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# TODO: Still needs to be amended to work with the GitButler flatpak
 # originates from https://github.com/flathub/net.veloren.veloren/pull/4
 
 import argparse
@@ -11,7 +12,6 @@ import sys
 import urllib.request
 
 GENERATOR_SCRIPT_URL = "https://github.com/flatpak/flatpak-builder-tools/raw/master/cargo/flatpak-cargo-generator.py"
-
 
 def run(cmdline, cwd=None):
     logging.info(f"Running {cmdline}")
