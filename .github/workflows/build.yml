@@ -35,7 +35,7 @@ jobs:
           submodules: true
       - name: Prerequisites
         run: |
-          sudo apt install -yqq flatpak flatpak-builder
+          sudo apt install -yqq flatpak flatpak-builder appstream-compose
           flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
           flatpak install --user --noninteractive flathub org.gnome.Platform//47 org.gnome.Sdk//47
 
