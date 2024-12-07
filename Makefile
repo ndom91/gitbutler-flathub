@@ -28,7 +28,7 @@ lint:
 	# appstreamcli validate com.gitbutler.app.metainfo.xml
 
 bundle:
-	flatpak build-bundle .repo com.gitbutler.app.flatpak com.gitbutler.app
+	flatpak build-bundle repo com.gitbutler.app.flatpak com.gitbutler.app
 
 clean:
 	rm -rf .flatpak-builder build/
