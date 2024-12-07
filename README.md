@@ -20,12 +20,6 @@ $ make install
 make sources
 ```
 
-3. Build flatpak
-
-```sh
-make flatpak
-```
-
 ### Manual
 
 We'll need to use the `flatpak-builder-tools` `cargo` as well as `node` builders
@@ -64,12 +58,12 @@ Using [flatpak-cargo-generator](https://github.com/flatpak/flatpak-builder-tools
 
 ```
 cd flatpak-builder-tools/cargo
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 pip install poetry
 poetry install
 
-python3 flatpak-cargo-generator.py /opt/gitbutler/gitbutler/Cargo.lock -o cargo-sources.json
+python flatpak-cargo-generator.py /opt/gitbutler/gitbutler/Cargo.lock -o cargo-sources.json
 ```
 
 ## Building
@@ -78,7 +72,21 @@ After you've got the prerequisites installed and the cargo and node source files
 generated, we can build the actual flatpak.
 
 ```
-$ make flatpak
+$ make flatpak # or `flatpak-local` for local dev to auto-install after building
 ```
+
+If you used the local variant, you can now run the flatpak via `flatpak run com.gitbutler.app`, if you're not building for local consumption, continue on to the next step.
+
+## Bundling
+
+Finally, to export an archive for sharing, you can generate a `com.gitbutler.app.flatpak` file in the root of the repository.
+
+```
+$ make bundle
+```
+
+## License
+
+MIT
 
 
