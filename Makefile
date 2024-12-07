@@ -1,5 +1,8 @@
-OS := $(shell uname)
-.PHONY: install sources flatpak bundle clean lint
+SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c  
+.DELETE_ON_ERROR:
+.PHONY: install sources flatpak flatpak-local lint bundle clean
 
 install:
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -19,9 +22,11 @@ sources:
 	# git submodule update --remote --merge
 
 flatpak:
+	rustup override add nightly-2024-08-01
+	flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
+
+flatpak-local:
 	flatpak-builder --install --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
-	# flatpak-builder --disable-rofiles-fuse --verbose --force-clean --user --install-deps-from=flathub --repo=repo builddir com.gitbutler.app.yml
-	# flatpak run org.flatpak.Builder --verbose --keep-build-dirs --user --install --force-clean build com.gitbutler.app.yml --repo=.repo
 
 lint:
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest com.gitbutler.app.yml
@@ -32,4 +37,4 @@ bundle:
 
 clean:
 	rm -rf .flatpak-builder build/
-# flatpak remove com.gitbutler.app -y --delete-data
+	# flatpak remove com.gitbutler.app -y --delete-data

@@ -2,3 +2,4 @@
 builddir
 repo
 package-lock.json
+com.gitbutler.app.flatpak

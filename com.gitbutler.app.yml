@@ -81,11 +81,12 @@ modules:
       - cargo fetch --manifest-path Cargo.toml
       - cargo build -p gitbutler-git
       # TODO: Change back from 'debug'
-      - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-tauri
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-askpass
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-setsid
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-setsid
       - install -Dm644 -t /app/share/applications/ com.gitbutler.app.desktop
       - |
         for size in 32x32 128x128 256x256@2; do

@@ -1,7 +1,8 @@
 [Desktop Entry]
 Categories=Development;
-Exec=gitbutler-tauri
+Exec=gitbutler-tauri %U
 Icon=com.gitbutler.app
 Name=GitButler Nightly
+MimeType=x-scheme-handler/gitbutler;
 Terminal=false
 Type=Application
