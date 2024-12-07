@@ -74,6 +74,8 @@ modules:
       env:
         CARGO_HOME: /run/build/gitbutler/cargo
         RUST_BACKTRACE: all
+        TAURI_SIGNING_PRIVATE_KEY: a
+        TAURI_SIGNING_PRIVATE_KEY_PASSWORD: b
     build-commands:
       - chmod 755 pnpm
       - mkdir bin && mv pnpm bin/
@@ -82,7 +84,7 @@ modules:
       - cargo build -p gitbutler-git
       # TODO: Change back from 'debug'
       # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
       - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass

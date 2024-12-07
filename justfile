@@ -1,8 +1,5 @@
 flatpak_id := "com.gitbutler.app"
 
-export TAURI_SIGNING_PRIVATE_KEY := 'a'
-export TAURI_SIGNING_PRIVATE_KEY_PASSWORD := 'b'
-
 default:
 	just --list
 
