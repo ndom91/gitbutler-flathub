@@ -4,6 +4,7 @@ default:
 	just --list
 
 [group('setup')]
+[doc('Install all required dependencies')]
 install:
 	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak --user install flathub -y org.flatpak.Builder \
@@ -15,6 +16,7 @@ install:
 	pip install aiohttp toml
 
 [group('setup')]
+[doc('Generate cargo and node sources files')]
 sources:
 	python flatpak-cargo-generator.py -o cargo-sources.json /opt/gitbutler/gitbutler/Cargo.lock
 	# Need to convert pnpm lock file to npm package-lock.json first
@@ -24,20 +26,24 @@ sources:
 
 set positional-arguments := true
 [group('build')]
+[doc('Build the app using flatpak-builder')]
 flatpak *INSTALL:
 	rustup override add nightly-2024-08-01
 	flatpak-builder {{INSTALL}} --force-clean --user --install-deps-from=flathub --repo=repo builddir {{ flatpak_id }}.yml
 
 [group('build')]
+[doc('Export the built app as a flatpak bundle')]
 bundle:
 	flatpak build-bundle repo {{ flatpak_id }}.flatpak {{ flatpak_id }}
 
 [group('dev')]
+[doc('Lint the manifest and metainfo files')]
 lint:
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest {{ flatpak_id }}.yml
 	# appstreamcli validate {{ flatpak_id }}.metainfo.xml
 
 [group('dev')]
+[doc('Delete build artifacts')]
 clean:
-	rm -rf .flatpak-builder build/
+	rm -rf .flatpak-builder builddir
 	# flatpak remove {{ flatpak_id }} -y --delete-data
