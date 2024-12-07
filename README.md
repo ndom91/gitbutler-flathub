@@ -6,18 +6,21 @@ This is the flatpak packaging code for the [GitButler](https://github.com/gitbut
 
 ## Setup Build Prerequisites
 
+0. Install [just](https://just.systems/man/en/packages.html) project command
+   runner.
+
 ### Automatic
 
 1. Install `flatpak-builder-tools` and `flatpak-builder`
 
 ```sh
-$ make install
+$ just install
 ```
 
 2. Generate sources
 
 ```sh
-make sources
+$ just sources
 ```
 
 ### Manual
@@ -72,7 +75,8 @@ After you've got the prerequisites installed and the cargo and node source files
 generated, we can build the actual flatpak.
 
 ```
-$ make flatpak # or `flatpak-local` for local dev to auto-install after building
+$ just flatpak
+$ just flatpak --install # To auto-install after building
 ```
 
 If you used the local variant, you can now run the flatpak via `flatpak run com.gitbutler.app`, if you're not building for local consumption, continue on to the next step.
@@ -82,7 +86,7 @@ If you used the local variant, you can now run the flatpak via `flatpak run com.
 Finally, to export an archive for sharing, you can generate a `com.gitbutler.app.flatpak` file in the root of the repository.
 
 ```
-$ make bundle
+$ just bundle
 ```
 
 ## License
