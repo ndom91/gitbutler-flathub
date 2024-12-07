@@ -1,5 +1,8 @@
 flatpak_id := "com.gitbutler.app"
 
+export TAURI_SIGNING_PRIVATE_KEY := 'a'
+export TAURI_SIGNING_PRIVATE_KEY_PASSWORD := 'b'
+
 default:
 	just --list
 
@@ -28,7 +31,7 @@ set positional-arguments := true
 [group('build')]
 [doc('Build the app using flatpak-builder')]
 flatpak *INSTALL:
-	rustup override add nightly-2024-08-01
+	rustup show # Ensure rust-toolchain.toml Rust version is installed
 	flatpak-builder {{INSTALL}} --force-clean --user --install-deps-from=flathub --repo=repo builddir {{ flatpak_id }}.yml
 
 [group('build')]
