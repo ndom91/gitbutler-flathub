@@ -70,6 +70,7 @@ modules:
       env:
         CARGO_HOME: /run/build/gitbutler/cargo
         RUST_BACKTRACE: all
+        TURBO_TELEMETRY_DISABLED: 1
         TAURI_SIGNING_PRIVATE_KEY: a
         TAURI_SIGNING_PRIVATE_KEY_PASSWORD: b
     build-commands:
