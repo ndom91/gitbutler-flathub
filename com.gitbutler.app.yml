@@ -106,7 +106,7 @@ modules:
     build-commands:
       - chmod 755 jq && mkdir bin && mv jq bin/
       # For adding 'app.staging.gitbutler.com' to CSP until its commited
-      - jq --arg connectcsp "'self' ipc:// http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://app.staging.gitbutler.com https://api.anthropic.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
+      - jq --arg connectcsp "'self' 'ipc:' http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://app.staging.gitbutler.com https://api.anthropic.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
       - chmod 755 pnpm && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
