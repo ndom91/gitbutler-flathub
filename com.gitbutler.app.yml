@@ -43,7 +43,7 @@ modules:
       - /include
       - /lib/pkgconfig
       - /share/man
-    sources":
+    sources:
       - type: git
         url: https://github.com/tutao/libsecret.git
         commit: 3d18f7e928d6de69457ec3d18d5ca84923191957
