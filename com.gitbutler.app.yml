@@ -88,21 +88,13 @@ modules:
         - STAGING="https://app.staging.gitbutler.com"
     build-commands:
       - chmod 755 jq && mkdir bin && mv jq bin/
-      # Running: jq --arg connect "boop" '.app.security.csp."connect-src" = $connect' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
       # For adding 'app.staging.gitbutler.com' to CSP until its commited
-      - jq --arg connectcsp "'self' 'ipc:' http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://app.staging.gitbutler.com https://api.anthropic.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
-      # - jq --arg connectcsp "'self' bool:// https://google.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
-      - cat crates/gitbutler-tauri/tauri.conf.json | jq '.app.security.csp."connect-src"'
-      - cat crates/gitbutler-tauri/tauri.conf.json
-      - env | grep -i staging
-      # - env | grep -i connectsrc
+      - jq --arg connectcsp "'self' ipc:// http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://app.staging.gitbutler.com https://api.anthropic.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
       - chmod 755 pnpm && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
-      - cargo build -p gitbutler-git
-      # - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json
-      # TODO: Change back from 'debug'
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      - cargo build --release -p gitbutler-git
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
       - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass
