@@ -56,7 +56,7 @@ jobs:
           mkdir flatpak_output
           cp ${{ env.FLATPAK_ID }}.flatpak flatpak_output/
           cp com.gitbutler.app.yml flatpak_output/
-          tar -czvf flatpak_files.tar.gz flatpak_output
+          tar -czvf gitbutler_flatpak.tar.gz flatpak_output
 
       - name: Upload Flatpak archive
         uses: actions/upload-artifact@v4
