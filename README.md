@@ -81,7 +81,7 @@ $ just flatpak
 $ just flatpak --install 
 ```
 
-If you used the local variant, you can now run the flatpak via `flatpak run com.gitbutler.app`, if you're not building for local consumption, continue on to the next step.
+If you used installed, you can now run the flatpak via `flatpak run com.gitbutler.app`, if you're not building for local consumption, continue on to the next step.
 
 ## Bundling
 
