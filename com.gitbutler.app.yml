@@ -16,6 +16,7 @@ finish-args:
   - --share=network
   - --filesystem=host
   - --filesystem=xdg-run/gvfsd
+  - --filesystem=xdg-run/keyring
   - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons:~/.icons
   # Required for interacting with git
   - --socket=ssh-auth
@@ -30,6 +31,22 @@ finish-args:
 separate-locales: false
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
+  - name: libsecret
+    buildsystem: meson
+    config-opts:
+      - -Dmanpage=false
+      - -Dvapi=false
+      - -Dgtk_doc=false
+      - -Dintrospection=false
+    cleanup:
+      - /bin
+      - /include
+      - /lib/pkgconfig
+      - /share/man
+    sources":
+      - type: git
+        url: https://github.com/tutao/libsecret.git
+        commit: 3d18f7e928d6de69457ec3d18d5ca84923191957
   - name: GitButler
     sources:
       - type: file
