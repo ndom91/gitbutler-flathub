@@ -32,6 +32,18 @@ modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
   - name: GitButler
     sources:
+      - type: file
+        url: https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-arm64
+        dest-filename: jq
+        sha256: 5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5
+        only-arches:
+         - aarch64
+      - type: file
+        url: https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64
+        dest-filename: jq
+        sha256: 5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5
+        only-arches:
+         - x86_64
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
         tag: nightly/0.5.943
@@ -73,9 +85,12 @@ modules:
         TURBO_TELEMETRY_DISABLED: 1
         TAURI_SIGNING_PRIVATE_KEY: a
         TAURI_SIGNING_PRIVATE_KEY_PASSWORD: b
+        STAGING: "https://app.staging.gitbutler.com"
+        CONNECT_SRC: "'self' ipc: http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://api.anthropic.com ${STAGING}"
     build-commands:
-      - chmod 755 pnpm
-      - mkdir bin && mv pnpm bin/
+      - chmod 755 jq && mkdir bin && mv jq bin/
+      - jq --arg a "${CONNECT_SRC}" '.app.security.csp."connect-src" = $a' crates/gitbutler-tauri/tauri.conf.json >"tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
+      - chmod 755 pnpm && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
       - cargo build -p gitbutler-git
