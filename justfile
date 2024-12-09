@@ -27,9 +27,9 @@ sources:
 set positional-arguments := true
 [group('build')]
 [doc('Build the app using flatpak-builder')]
-flatpak *INSTALL:
+flatpak *FLAGS:
 	rustup show # Ensure rust-toolchain.toml Rust version is installed
-	flatpak-builder {{INSTALL}} --force-clean --user --install-deps-from=flathub --repo=repo builddir {{ flatpak_id }}.yml
+	flatpak-builder {{FLAGS}} --force-clean --user --install-deps-from=flathub --repo=repo builddir {{ flatpak_id }}.yml
 
 [group('build')]
 [doc('Export the built app as a flatpak bundle')]
