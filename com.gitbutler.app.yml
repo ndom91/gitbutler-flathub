@@ -75,7 +75,7 @@ modules:
         - TAURI_SIGNING_PRIVATE_KEY=a
         - TAURI_SIGNING_PRIVATE_KEY_PASSWORD=b
     build-commands:
-      - chmod 755 pnpm && mv pnpm bin/
+      - chmod 755 pnpm && mkdir bin && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
       # - cargo build --release -p gitbutler-git
