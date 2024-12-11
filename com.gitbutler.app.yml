@@ -31,22 +31,22 @@ finish-args:
 separate-locales: false
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
-  - name: libsecret
-    buildsystem: meson
-    config-opts:
-      - -Dmanpage=false
-      - -Dvapi=false
-      - -Dgtk_doc=false
-      - -Dintrospection=false
-    cleanup:
-      - /bin
-      - /include
-      - /lib/pkgconfig
-      - /share/man
-    sources:
-      - type: git
-        url: https://github.com/tutao/libsecret.git
-        commit: 3d18f7e928d6de69457ec3d18d5ca84923191957
+  # - name: libsecret
+  #   buildsystem: meson
+  #   config-opts:
+  #     - -Dmanpage=false
+  #     - -Dvapi=false
+  #     - -Dgtk_doc=false
+  #     - -Dintrospection=false
+  #   cleanup:
+  #     - /bin
+  #     - /include
+  #     - /lib/pkgconfig
+  #     - /share/man
+  #   sources:
+  #     - type: git
+  #       url: https://github.com/tutao/libsecret.git
+  #       commit: 3d18f7e928d6de69457ec3d18d5ca84923191957
   - name: GitButler
     sources:
       - type: file
@@ -63,8 +63,8 @@ modules:
          - x86_64
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        tag: nightly/0.5.943
-        commit: 3f1461eece17fccf17b5672f75bfcf1a02a51cc9
+        commit: fe26b61ccfe51caddc4bebbabf850e8722867dc1
+        # tag: nightly/0.5.943
       - type: patch
         path: patches/0001-disable-updater-capabilities.patch
       - type: patch
@@ -102,7 +102,6 @@ modules:
         - TURBO_TELEMETRY_DISABLED=1
         - TAURI_SIGNING_PRIVATE_KEY=a
         - TAURI_SIGNING_PRIVATE_KEY_PASSWORD=b
-        - STAGING="https://app.staging.gitbutler.com"
     build-commands:
       - chmod 755 jq && mkdir bin && mv jq bin/
       # For adding 'app.staging.gitbutler.com' to CSP until its commited
@@ -110,12 +109,13 @@ modules:
       - chmod 755 pnpm && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
-      - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      # - cargo build --release -p gitbutler-git
+      - cargo build -p gitbutler-git
+      - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
-      - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
-      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass
-      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-setsid
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-tauri
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-askpass
+      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-setsid
       - install -Dm644 -t /app/share/applications/ com.gitbutler.app.desktop
       - |
         for size in 32x32 128x128 256x256@2; do
