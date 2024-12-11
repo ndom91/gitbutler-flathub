@@ -31,36 +31,8 @@ finish-args:
 separate-locales: false
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
-  # - name: libsecret
-  #   buildsystem: meson
-  #   config-opts:
-  #     - -Dmanpage=false
-  #     - -Dvapi=false
-  #     - -Dgtk_doc=false
-  #     - -Dintrospection=false
-  #   cleanup:
-  #     - /bin
-  #     - /include
-  #     - /lib/pkgconfig
-  #     - /share/man
-  #   sources:
-  #     - type: git
-  #       url: https://github.com/tutao/libsecret.git
-  #       commit: 3d18f7e928d6de69457ec3d18d5ca84923191957
   - name: GitButler
     sources:
-      - type: file
-        url: https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-arm64
-        dest-filename: jq
-        sha256: 5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5
-        only-arches:
-         - aarch64
-      - type: file
-        url: https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64
-        dest-filename: jq
-        sha256: 5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5
-        only-arches:
-         - x86_64
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
         commit: fe26b61ccfe51caddc4bebbabf850e8722867dc1
@@ -103,9 +75,6 @@ modules:
         - TAURI_SIGNING_PRIVATE_KEY=a
         - TAURI_SIGNING_PRIVATE_KEY_PASSWORD=b
     build-commands:
-      - chmod 755 jq && mkdir bin && mv jq bin/
-      # For adding 'app.staging.gitbutler.com' to CSP until its commited
-      - jq --arg connectcsp "'self' 'ipc:' http://ipc.localhost https://eu.posthog.com https://eu.i.posthog.com https://app.gitbutler.com https://o4504644069687296.ingest.sentry.io ws://localhost:7703 https://github.com https://api.github.com https://api.openai.com https://app.staging.gitbutler.com https://api.anthropic.com" '.app.security.csp."connect-src" = $connectcsp' crates/gitbutler-tauri/tauri.conf.json > "tmp" && mv "tmp" crates/gitbutler-tauri/tauri.conf.json
       - chmod 755 pnpm && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
