@@ -35,7 +35,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: ac6e097b4480ccf4cc9d064f46447b362ad5ffbf
+        commit: 338133ed1e8364833d994a1910b31eb31d511273
         # tag: nightly/0.5.943
       - type: patch
         path: patches/0001-disable-updater-capabilities.patch
@@ -78,13 +78,14 @@ modules:
       - chmod 755 pnpm && mkdir bin && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
-      # - cargo build --release -p gitbutler-git
-      - cargo build -p gitbutler-git
-      - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      # - cargo build -p gitbutler-git
+      # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      - cargo build --release -p gitbutler-git
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-tauri
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-askpass
-      - install -Dm755 -t /app/bin/ target/debug/gitbutler-git-setsid
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass
+      - install -Dm755 -t /app/bin/ target/release/gitbutler-git-setsid
       - install -Dm644 -t /app/share/applications/ com.gitbutler.app.desktop
       - |
         for size in 32x32 128x128 256x256@2; do
