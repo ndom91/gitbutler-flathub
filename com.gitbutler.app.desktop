@@ -2,7 +2,7 @@
 Categories=Development;
 Exec=gitbutler-tauri %U
 Icon=com.gitbutler.app
-Name=GitButler Nightly
+Name=GitButler
 MimeType=x-scheme-handler/gitbutler;
 Terminal=false
 Type=Application

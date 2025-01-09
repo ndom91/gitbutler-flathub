@@ -4,7 +4,7 @@
   <name>GitButler</name>
 
   <developer id="com.gitbutler">
-    <name>GitButler Inc</name>
+    <name>GitButler</name>
   </developer>
 
   <description>
@@ -34,6 +34,9 @@
   </branding>
 
   <releases>
+    <release version="0.5.985" date="2025-01-09">
+      <description></description>
+    </release>
     <release version="0.14.4" date="2024-12-13">
       <description></description>
     </release>
