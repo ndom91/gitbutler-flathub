@@ -35,8 +35,9 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: d7590fb85554afef26292f9a8eff6a8e48f7695b
-        tag: release/0.14.4
+        commit: 0efff6ab27131fd172a1bccf3e968ead29c6afcf
+        # commit: d7590fb85554afef26292f9a8eff6a8e48f7695b
+        # tag: release/0.14.4
       - type: patch
         path: patches/0001-disable-updater-capabilities.patch
       - type: patch
