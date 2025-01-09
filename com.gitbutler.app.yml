@@ -42,7 +42,7 @@ modules:
       - type: patch
         path: patches/0002-disable-updater-tauri-plugin.patch
       - type: patch
-        path: patches/0003-disable-typescript-updater.patch
+        path: patches/0003-disable-updater-typescript.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
