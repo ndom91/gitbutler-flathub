@@ -12,19 +12,23 @@ finish-args:
   - --device=dri
   - --socket=wayland
   - --socket=fallback-x11
-  - --socket=pulseaudio
   - --share=ipc
   - --share=network
   - --filesystem=host
+  - --filesystem=xdg-run/gnupg:ro
+  - --filesystem=xdg-run/gvfs
   - --filesystem=xdg-run/gvfsd
+  - --filesystem=xdg-config/gitbutler
   - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons:~/.icons
+  # - --persist=~/.config/gitbutler
+  - --persist=~/.local/share/gitbutler-tauri
+
   # Required for interacting with git and keyring
-  - --filesystem=xdg-run/keyring
-  - --talk-name=org.freedesktop.portal.Secret
-  - --talk-name=org.freedesktop.secrets
-  - --talk-name=org.kde.kwalletd6
   - --socket=ssh-auth
   - --socket=gpg-agent
+  - --system-talk-name=org.freedesktop.secrets
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.gnome.keyring.SystemPrompter
 
 # cleanup:
@@ -32,7 +36,6 @@ finish-args:
 
 separate-locales: false
 modules:
-  - shared-modules/libsecret/libsecret.json
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
   - name: GitButler
     sources:
