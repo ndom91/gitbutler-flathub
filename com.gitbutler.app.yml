@@ -50,6 +50,8 @@ modules:
         path: patches/0002-disable-updater-tauri-plugin.patch
       - type: patch
         path: patches/0003-disable-updater-typescript.patch
+      - type: patch
+        path: patches/0004-keyring-linux.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
