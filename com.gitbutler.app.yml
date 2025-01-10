@@ -31,9 +31,6 @@ finish-args:
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.gnome.keyring.SystemPrompter
 
-# cleanup:
-#   - '*'
-
 separate-locales: false
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json

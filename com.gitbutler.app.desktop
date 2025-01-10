@@ -1,8 +1,10 @@
 [Desktop Entry]
-Categories=Development;
+Categories=Utility;Development;
 Exec=gitbutler-tauri %U
 Icon=com.gitbutler.app
 Name=GitButler
+StartupWMClass=gitbutler
+Comment=GitButler is a next generation version control tool for the modern developer workflow.
 MimeType=x-scheme-handler/gitbutler;
 Terminal=false
 Type=Application
