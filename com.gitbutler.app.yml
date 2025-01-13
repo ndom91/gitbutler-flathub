@@ -18,10 +18,9 @@ finish-args:
   - --filesystem=xdg-run/gnupg:ro
   - --filesystem=xdg-run/gvfs
   - --filesystem=xdg-run/gvfsd
+  - --filesystem=xdg-config/git
   - --filesystem=xdg-config/gitbutler
   - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons:~/.icons
-  # - --persist=~/.config/gitbutler
-  - --persist=~/.local/share/gitbutler-tauri
 
   # Required for interacting with git and keyring
   - --socket=ssh-auth
