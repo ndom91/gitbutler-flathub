@@ -17,10 +17,11 @@ This is the flatpak packaging code for the [GitButler](https://github.com/gitbut
 $ just install
 ```
 
-2. Generate sources
+2. Generate sources. First positional argument is the path to your cloned
+   `gitbutlerapp/gitbutler` repository
 
 ```sh
-$ just sources
+$ just sources /opt/gitbutlerapp/gitbutler/
 ```
 
 ### Manual

@@ -3,3 +3,5 @@ builddir
 repo
 package-lock.json
 com.gitbutler.app.flatpak
+flatpak-cargo-generator.py
+venv

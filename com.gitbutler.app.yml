@@ -83,10 +83,15 @@ modules:
       - chmod 755 pnpm && mkdir bin && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
+
+      # Nightly
       # - cargo build -p gitbutler-git
       # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+
+      # Release
       - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
       - install -Dm755 -t /app/bin/ target/release/gitbutler-git-askpass

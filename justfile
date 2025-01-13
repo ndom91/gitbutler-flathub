@@ -15,16 +15,16 @@ install:
 	pip install "git+https://github.com/flatpak/flatpak-builder-tools.git#egg=flatpak_node_generator&subdirectory=node"
 	pip install aiohttp toml
 
+set positional-arguments := true
 [group('setup')]
 [doc('Generate cargo and node sources files')]
-sources:
-	python flatpak-cargo-generator.py -o cargo-sources.json /opt/gitbutler/gitbutler/Cargo.lock
+sources *GITBUTLER_DIR:
+	python flatpak-cargo-generator.py -o cargo-sources.json {{GITBUTLER_DIR}}/Cargo.lock
 	# Need to convert pnpm lock file to npm package-lock.json first
-	cd /opt/gitbutler/gitbutler && pnpm dlx pnpm-lock-to-npm-lock pnpm-lock.yaml
-	flatpak-node-generator --no-requests-cache -r -o node-sources.json npm /opt/gitbutler/gitbutler/package-lock.json
+	cd {{GITBUTLER_DIR}} && pnpm dlx pnpm-lock-to-npm-lock pnpm-lock.yaml
+	flatpak-node-generator --no-requests-cache -r -o node-sources.json npm {{GITBUTLER_DIR}}/package-lock.json
 	# git submodule update --remote --merge
 
-set positional-arguments := true
 [group('build')]
 [doc('Build the app using flatpak-builder')]
 flatpak *FLAGS:
