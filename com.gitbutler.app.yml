@@ -90,7 +90,7 @@ modules:
 
       # Release
       - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.release.json --no-bundle
 
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
