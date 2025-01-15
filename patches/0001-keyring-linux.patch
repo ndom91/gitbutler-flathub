@@ -1,18 +1,8 @@
-From 9c35b3d29fb52d1f4b7518a7d3f55b54e80606b5 Mon Sep 17 00:00:00 2001
-From: NotMe <not@me.com>
-Date: Fri, 10 Jan 2025 13:07:32 +0100
-Subject: fix: keyring
-
----
- Cargo.lock | 11 -----------
- Cargo.toml |  2 +-
- 2 files changed, 1 insertion(+), 12 deletions(-)
-
 diff --git a/Cargo.lock b/Cargo.lock
-index 6b585a3c8..2980c2812 100644
+index 290649189..d9cf403ab 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -5087,7 +5087,6 @@ checksum = "2f8fe839464d4e4b37d756d7e910063696af79a7e877282cb1825e4ec5f10833"
+@@ -5138,7 +5138,6 @@ checksum = "2f8fe839464d4e4b37d756d7e910063696af79a7e877282cb1825e4ec5f10833"
  dependencies = [
   "byteorder",
   "dbus-secret-service",
@@ -20,10 +10,10 @@ index 6b585a3c8..2980c2812 100644
   "log",
   "secret-service",
   "security-framework 2.11.1",
-@@ -5269,16 +5268,6 @@ version = "0.5.6"
+@@ -5320,16 +5319,6 @@ version = "0.5.6"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "0717cef1bc8b636c6e1c1bbdefc09e6322da8a9321966e8928ef80d20f7f770f"
- 
+
 -[[package]]
 -name = "linux-keyutils"
 -version = "0.2.4"
@@ -38,18 +28,15 @@ index 6b585a3c8..2980c2812 100644
  name = "linux-raw-sys"
  version = "0.4.14"
 diff --git a/Cargo.toml b/Cargo.toml
-index b6bcc9c09..0f750862e 100644
+index 23ddda5ac..8332d403f 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -52,7 +52,7 @@ uuid = { version = "1.11.0", features = ["v4", "serde"] }
- serde = { version = "1.0", features = ["derive"] }
- thiserror = "2.0.9"
- tokio = { version = "1.42.0", default-features = false }
--keyring = { version = "3.6.1", features = ["apple-native", "windows-native", "linux-native", "crypto-rust"] }
-+keyring = { version = "3.6.1", features = ["apple-native", "windows-native", "sync-secret-service", "crypto-rust"] }
+@@ -18,7 +18,7 @@ tokio = { version = "1.42.0", default-features = false }
+ keyring = { version = "3.6.1", features = [
+     "apple-native",
+     "windows-native",
+-    "linux-native",
++    "sync-secret-service",
+     "crypto-rust",
+ ] }
  anyhow = "1.0.95"
- parking_lot = "0.12.3"
- futures = "0.3.31"
--- 
-2.47.0
-
