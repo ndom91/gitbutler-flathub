@@ -34,6 +34,9 @@
   </branding>
 
   <releases>
+    <release version="0.5.991" date="2025-01-15">
+      <description></description>
+    </release>
     <release version="0.5.986" date="2025-01-10">
       <description></description>
     </release>
