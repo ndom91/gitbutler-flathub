@@ -37,17 +37,10 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: 0efff6ab27131fd172a1bccf3e968ead29c6afcf
-        # commit: d7590fb85554afef26292f9a8eff6a8e48f7695b
+        commit: ee5423a1533c00450b8c408dfc86c026ab43b09a
         # tag: release/0.14.4
       - type: patch
-        path: patches/0001-disable-updater-capabilities.patch
-      - type: patch
-        path: patches/0002-disable-updater-tauri-plugin.patch
-      - type: patch
-        path: patches/0003-disable-updater-typescript.patch
-      - type: patch
-        path: patches/0004-keyring-linux.patch
+        path: patches/0001-keyring-linux.patch
       - node-sources.json
       - cargo-sources.json
       - type: file
@@ -68,6 +61,7 @@ modules:
         sha256: 2625b2095a6722c0265deeec5f7779750c6abae317f30001eb20fba9f092d6cc
         only-arches:
          - aarch64
+
     buildsystem: simple
     build-options:
       build-args:
