@@ -37,7 +37,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: 116e7c7c9f8560b0e63049154da4abdd430467f9
+        tag: nightly/0.5.1000
+        # commit: beb2525ac7cc6c0c20024758152b1c24acd5c58b
         # tag: release/0.14.4
       - type: patch
         path: patches/0001-keyring-linux.patch
@@ -79,13 +80,13 @@ modules:
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
       - cargo fetch --manifest-path Cargo.toml
 
-      # Nightly
+      # Development
       # - cargo build -p gitbutler-git
       # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
 
       # Release
       - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.release.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
 
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
