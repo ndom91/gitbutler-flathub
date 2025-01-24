@@ -86,9 +86,9 @@ modules:
       # - pnpm run tauri build --debug --config tauri.conf.json --no-bundle
 
       # Release
-      - jq '.version="0.5.1006"' crates/gitbutler-tauri/tauri.conf.nightly.json > tauri.conf.json
+      - jq '.version="0.5.1006"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
       - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config tauri.conf.json --no-bundle
+      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly2.json --no-bundle
 
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
