@@ -37,9 +37,9 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        tag: nightly/0.5.1000
+        commit: 92d4b474c371dbfd23459d1f2cb939e49edbd1bc
         # commit: beb2525ac7cc6c0c20024758152b1c24acd5c58b
-        # tag: release/0.14.4
+        # tag: nightly/0.5.1000
       - type: patch
         path: patches/0001-keyring-linux.patch
       - node-sources.json
