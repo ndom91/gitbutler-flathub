@@ -37,7 +37,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: 92d4b474c371dbfd23459d1f2cb939e49edbd1bc
+        commit: 5cb922a348ab4443428738e13de13d5bd683a120
         # commit: beb2525ac7cc6c0c20024758152b1c24acd5c58b
         # tag: nightly/0.5.1000
       - type: patch
@@ -81,12 +81,14 @@ modules:
       - cargo fetch --manifest-path Cargo.toml
 
       # Development
+      # - jq '.version="0.5.1006"' crates/gitbutler-tauri/tauri.conf.json > tauri.conf.json
       # - cargo build -p gitbutler-git
-      # - pnpm run tauri build --debug --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      # - pnpm run tauri build --debug --config tauri.conf.json --no-bundle
 
       # Release
+      - jq '.version="0.5.1006"' crates/gitbutler-tauri/tauri.conf.nightly.json > tauri.conf.json
       - cargo build --release -p gitbutler-git
-      - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly.json --no-bundle
+      - pnpm run tauri build --config tauri.conf.json --no-bundle
 
       - install -Dm644 -t /app/share/metainfo/ com.gitbutler.app.metainfo.xml
       - install -Dm755 -t /app/bin/ target/release/gitbutler-tauri
