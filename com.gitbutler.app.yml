@@ -37,9 +37,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
-        commit: 5cb922a348ab4443428738e13de13d5bd683a120
-        # commit: beb2525ac7cc6c0c20024758152b1c24acd5c58b
-        # tag: nightly/0.5.1000
+        commit: e047b462542a53b7cc0948a8e223972173e327c6
       - type: patch
         path: patches/0001-keyring-linux.patch
       - node-sources.json
@@ -86,7 +84,7 @@ modules:
       # - pnpm run tauri build --debug --config tauri.conf.json --no-bundle
 
       # Release
-      - jq '.version="0.5.1006"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
+      - jq '.version="0.5.1013"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
       - cargo build --release -p gitbutler-git
       - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly2.json --no-bundle
 
