@@ -73,7 +73,7 @@ modules:
         - TURBO_TELEMETRY_DISABLED=1
         - TAURI_SIGNING_PRIVATE_KEY=a
         - TAURI_SIGNING_PRIVATE_KEY_PASSWORD=b
-        - VITE_FLATPAK_ID=com.gitbutler.app
+        - PUBLIC_FLATPAK_ID=com.gitbutler.app
     build-commands:
       - chmod 755 pnpm && mkdir bin && mv pnpm bin/
       - pnpm install --reporter=silent --frozen-lockfile --store-dir ./pnpm-store
