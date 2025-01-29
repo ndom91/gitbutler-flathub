@@ -64,8 +64,8 @@ modules:
 
     buildsystem: simple
     build-options:
-      build-args:
-        - --share=network
+      # build-args:
+      #   - --share=network
       append-path: /usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-nightly/extra/sdk/rust-nightly/bin:/run/build/GitButler/bin
       env:
         - CARGO_HOME=/run/build/gitbutler/cargo
