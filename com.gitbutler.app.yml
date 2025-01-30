@@ -38,7 +38,7 @@ modules:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
         # Update me to bump version
-        commit: bf4d2420558694ec38b284ed253fdd3762f45e88
+        commit: e8ba4e3347f45f6aad2f3ee48b2a474d4f10d83f
       - type: patch
         path: patches/0001-keyring-linux.patch
       - node-sources.json
@@ -64,8 +64,8 @@ modules:
 
     buildsystem: simple
     build-options:
-      # build-args:
-      #   - --share=network
+      build-args:
+        - --share=network
       append-path: /usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-nightly/extra/sdk/rust-nightly/bin:/run/build/GitButler/bin
       env:
         - CARGO_HOME=/run/build/gitbutler/cargo
@@ -86,7 +86,7 @@ modules:
 
       # Release
         # Update me to bump reported version
-      - jq '.version="0.5.1013"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
+      - jq '.version="0.5.1014"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
       - cargo build --release -p gitbutler-git
       - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly2.json --no-bundle
 
