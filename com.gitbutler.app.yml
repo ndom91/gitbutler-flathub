@@ -38,7 +38,7 @@ modules:
       - type: git
         url: https://github.com/gitbutlerapp/gitbutler.git
         # Update me to bump version
-        commit: e8ba4e3347f45f6aad2f3ee48b2a474d4f10d83f
+        commit: 23a596163d32669bef50993287cfb0899e29192b
       - type: patch
         path: patches/0001-keyring-linux.patch
       - node-sources.json
@@ -86,7 +86,7 @@ modules:
 
       # Release
         # Update me to bump reported version
-      - jq '.version="0.5.1014"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
+      - jq '.version="0.5.1020"' crates/gitbutler-tauri/tauri.conf.nightly.json > crates/gitbutler-tauri/tauri.conf.nightly2.json
       - cargo build --release -p gitbutler-git
       - pnpm run tauri build --config crates/gitbutler-tauri/tauri.conf.nightly2.json --no-bundle
 
